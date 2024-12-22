@@ -66,8 +66,9 @@ def get_trade_date_lag(yysj, lag=0):
     return trade_date_lag[['stock_symbol', 'report_type', 'trade_date', 'lag']]
 
 def calc_tech_factor(data):
-	data = data.sort_values(by='trade_date')
-	data['turnonver'] = data['volume'] / data['float_market_cap']
-	data['vol5'] = data['turnonver'].rolling(5).mean()
-	data['volt20'] = data['close'].rolling(20).std()
-	return data
+    data = data.sort_values(by='trade_date')
+    data['turnonver'] = data['volume'] / data['float_market_cap']
+    data['vol5'] = data['turnonver'].rolling(5).mean()
+    data['volt20'] = data['close'].rolling(20).std()
+    data['mtm'] = data['close'] / data['close'].shift(10) - 1
+    return data

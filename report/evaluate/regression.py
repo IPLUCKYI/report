@@ -17,4 +17,4 @@ def reg(df, x, y):
 	X = df[x]
 	X = sm.add_constant(X)
 	model = sm.OLS(Y, X).fit()
-	return model.summary()
+	return model
