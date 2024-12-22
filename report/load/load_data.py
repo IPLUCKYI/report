@@ -20,7 +20,7 @@ def load_yysj_data(year):
         # 当年一季报
         yysj_q1 = ak.stock_yysj_em(symbol="沪深A股", date=f"{year}0331")   
         yysj_q1['report_type'] = f'{year}0331'
-        yysj_q1['start_day'] = datetime.date(year=year, month=1, day=1)
+        yysj_q1['start_day'] = datetime.date(year=year, month=4, day=1)
         yysj_q1['deadline'] = datetime.date(year=year, month=4, day=30)
         yysj_list.append(yysj_q1)
     except:
@@ -64,3 +64,10 @@ def get_trade_date_lag(yysj, lag=0):
     trade_date_lag['trade_date'] = trade_date_lag['首次预约时间'].apply(lambda x: trade_date_shift(x, lag))
     trade_date_lag['lag'] = lag
     return trade_date_lag[['stock_symbol', 'report_type', 'trade_date', 'lag']]
+
+def calc_tech_factor(data):
+	data = data.sort_values(by='trade_date')
+	data['turnonver'] = data['volume'] / data['float_market_cap']
+	data['vol5'] = data['turnonver'].rolling(5).mean()
+	data['volt20'] = data['close'].rolling(20).std()
+	return data

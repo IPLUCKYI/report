@@ -1,7 +1,7 @@
 import pyrootutils
 pyrootutils.setup_root(__file__, indicator="setup.py", pythonpath=True)
 
-from report.load.load_report_time import load_yysj_data, get_trade_date_lag
+from report.report.load.load_data import load_yysj_data, get_trade_date_lag
 
 import os
 import multiprocessing as mp
