@@ -71,4 +71,7 @@ def calc_tech_factor(data):
     data['vol5'] = data['turnonver'].rolling(5).mean()
     data['volt20'] = data['close'].rolling(20).std()
     data['mtm'] = data['close'] / data['close'].shift(10) - 1
+    data['turnonver2_6'] = (data['turnonver'].rolling(6).sum() - data['turnonver'].shift(0)) / 5
+    data['turnonver12_61'] = (data['turnonver'].rolling(61).sum() - data['turnonver'].rolling(12).sum()) / 49
+    data['abnormal_volume'] = data['turnonver2_6'] / data['turnonver12_61']
     return data
